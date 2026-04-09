@@ -126,6 +126,7 @@ export default function BenchmarkDetailPage() {
   const [newCompetitorUrl, setNewCompetitorUrl] = useState('');
   const [newCompetitorNotes, setNewCompetitorNotes] = useState('');
   const [editingNotes, setEditingNotes] = useState<Record<string, string>>({});
+  const [editingFigmaUrl, setEditingFigmaUrl] = useState<Record<string, string>>({});
 
 
   async function handleDeleteBenchmark() {
@@ -350,18 +351,31 @@ export default function BenchmarkDetailPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-gray-400 hover:text-blue-500"
+                      title="Sitio web"
                     >
                       <Globe className="h-4 w-4" />
+                    </a>
+                  )}
+                  {activeComp.figma_url && (
+                    <a
+                      href={activeComp.figma_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-400 hover:text-purple-500"
+                      title="Ver en Figma"
+                    >
+                      <svg className="h-4 w-4" viewBox="0 0 38 57" fill="currentColor"><path d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg>
                     </a>
                   )}
                 </div>
                 <div className="flex gap-2">
                   <button
-                    onClick={() =>
-                      setEditingNotes({ ...editingNotes, [activeComp.id]: activeComp.notes || '' })
-                    }
+                    onClick={() => {
+                      setEditingNotes({ ...editingNotes, [activeComp.id]: activeComp.notes || '' });
+                      setEditingFigmaUrl({ ...editingFigmaUrl, [activeComp.id]: activeComp.figma_url || '' });
+                    }}
                     className="rounded-md p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
-                    title="Editar notas"
+                    title="Editar notas y link de Figma"
                   >
                     <Pencil className="h-4 w-4" />
                   </button>
@@ -380,23 +394,44 @@ export default function BenchmarkDetailPage() {
             <div className="px-6 py-5">
               {editingNotes[activeComp.id] !== undefined ? (
                 <div className="space-y-3">
-                  <textarea
-                    value={editingNotes[activeComp.id]}
-                    onChange={(e) =>
-                      setEditingNotes({ ...editingNotes, [activeComp.id]: e.target.value })
-                    }
-                    rows={12}
-                    className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 font-mono focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                    autoFocus
-                  />
+                  <div>
+                    <label className="block text-xs font-medium text-gray-500 mb-1">Link de Figma / FigJam (opcional)</label>
+                    <input
+                      type="url"
+                      value={editingFigmaUrl[activeComp.id] || ''}
+                      onChange={(e) =>
+                        setEditingFigmaUrl({ ...editingFigmaUrl, [activeComp.id]: e.target.value })
+                      }
+                      placeholder="https://www.figma.com/design/... o https://www.figma.com/board/..."
+                      className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-500 mb-1">Descripción / Notas</label>
+                    <textarea
+                      value={editingNotes[activeComp.id]}
+                      onChange={(e) =>
+                        setEditingNotes({ ...editingNotes, [activeComp.id]: e.target.value })
+                      }
+                      rows={12}
+                      className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 font-mono focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      autoFocus
+                    />
+                  </div>
                   <div className="flex gap-2">
                     <button
                       type="button"
                       onClick={async () => {
-                        await updateCompetitor(activeComp.id, { notes: editingNotes[activeComp.id] });
-                        const updated = { ...editingNotes };
-                        delete updated[activeComp.id];
-                        setEditingNotes(updated);
+                        await updateCompetitor(activeComp.id, {
+                          notes: editingNotes[activeComp.id],
+                          figma_url: editingFigmaUrl[activeComp.id] || null,
+                        });
+                        const updatedNotes = { ...editingNotes };
+                        delete updatedNotes[activeComp.id];
+                        setEditingNotes(updatedNotes);
+                        const updatedFigma = { ...editingFigmaUrl };
+                        delete updatedFigma[activeComp.id];
+                        setEditingFigmaUrl(updatedFigma);
                         refetch();
                       }}
                       className="rounded-md bg-blue-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-blue-700"
@@ -406,9 +441,12 @@ export default function BenchmarkDetailPage() {
                     <button
                       type="button"
                       onClick={() => {
-                        const updated = { ...editingNotes };
-                        delete updated[activeComp.id];
-                        setEditingNotes(updated);
+                        const updatedNotes = { ...editingNotes };
+                        delete updatedNotes[activeComp.id];
+                        setEditingNotes(updatedNotes);
+                        const updatedFigma = { ...editingFigmaUrl };
+                        delete updatedFigma[activeComp.id];
+                        setEditingFigmaUrl(updatedFigma);
                       }}
                       className="rounded-md border border-gray-300 px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-50"
                     >
@@ -481,12 +519,13 @@ export default function BenchmarkDetailPage() {
               ) : (
                 <button
                   type="button"
-                  onClick={() =>
-                    setEditingNotes({ ...editingNotes, [activeComp.id]: '' })
-                  }
+                  onClick={() => {
+                    setEditingNotes({ ...editingNotes, [activeComp.id]: '' });
+                    setEditingFigmaUrl({ ...editingFigmaUrl, [activeComp.id]: '' });
+                  }}
                   className="w-full rounded-md border border-dashed border-gray-200 px-4 py-8 text-center text-sm text-gray-400 transition-colors hover:border-gray-400 hover:bg-gray-50"
                 >
-                  + Agregar descripción o notas...
+                  + Agregar descripción, notas o link de Figma...
                 </button>
               )}
             </div>

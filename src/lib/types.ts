@@ -29,6 +29,7 @@ export interface Competitor {
   name: string;
   url: string;
   notes: string;
+  figma_url: string | null;
   created_at: string;
   // Joined
   screenshots?: Screenshot[];
