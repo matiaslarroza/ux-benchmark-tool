@@ -6,7 +6,7 @@ import { createClient } from '@/lib/supabase';
 const ALLOWED_DOMAIN = 'humand.co';
 
 export default function LoginPage() {
-  const [mode, setMode] = useState<'login' | 'register'>('login');
+  const [mode, setMode] = useState<'login' | 'register' | 'forgot'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -28,6 +28,20 @@ export default function LoginPage() {
 
     if (!validateDomain(email)) {
       setError(`Solo se permiten emails @${ALLOWED_DOMAIN}`);
+      setLoading(false);
+      return;
+    }
+
+    if (mode === 'forgot') {
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/auth/callback?next=/reset-password`,
+      });
+
+      if (resetError) {
+        setError(resetError.message);
+      } else {
+        setMessage('Te enviamos un email con el link para restablecer tu contraseña.');
+      }
       setLoading(false);
       return;
     }
@@ -78,7 +92,7 @@ export default function LoginPage() {
             UX Benchmark Tool
           </h1>
           <p className="mt-2 text-sm" style={{ color: 'var(--text-lighter)' }}>
-            {mode === 'login' ? 'Iniciá sesión con tu cuenta' : 'Creá tu cuenta'}
+            {mode === 'login' ? 'Iniciá sesión con tu cuenta' : mode === 'register' ? 'Creá tu cuenta' : 'Recuperá tu contraseña'}
           </p>
         </div>
 
@@ -115,21 +129,35 @@ export default function LoginPage() {
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium" style={{ color: 'var(--text-lighter)' }}>
-              Contraseña
-            </label>
-            <input
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              minLength={6}
-              className="mt-1 block w-full rounded-md border px-3 py-2 text-sm placeholder-gray-400 focus:outline-none focus:ring-1"
-              style={{ borderColor: 'var(--border-strong)', color: 'var(--text-default)' }}
-              placeholder={mode === 'register' ? 'Mínimo 6 caracteres' : '••••••••'}
-            />
-          </div>
+          {mode !== 'forgot' && (
+            <div>
+              <div className="flex items-center justify-between">
+                <label className="block text-sm font-medium" style={{ color: 'var(--text-lighter)' }}>
+                  Contraseña
+                </label>
+                {mode === 'login' && (
+                  <button
+                    type="button"
+                    onClick={() => { setMode('forgot'); setError(''); setMessage(''); }}
+                    className="text-xs hover:opacity-80"
+                    style={{ color: 'var(--brand-600)' }}
+                  >
+                    Olvidé mi contraseña
+                  </button>
+                )}
+              </div>
+              <input
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                minLength={6}
+                className="mt-1 block w-full rounded-md border px-3 py-2 text-sm placeholder-gray-400 focus:outline-none focus:ring-1"
+                style={{ borderColor: 'var(--border-strong)', color: 'var(--text-default)' }}
+                placeholder={mode === 'register' ? 'Mínimo 6 caracteres' : '••••••••'}
+              />
+            </div>
+          )}
 
           <button
             type="submit"
@@ -138,8 +166,8 @@ export default function LoginPage() {
             style={{ backgroundColor: 'var(--brand-600)' }}
           >
             {loading
-              ? (mode === 'login' ? 'Ingresando...' : 'Registrando...')
-              : (mode === 'login' ? 'Iniciar sesión' : 'Crear cuenta')
+              ? (mode === 'forgot' ? 'Enviando...' : mode === 'login' ? 'Ingresando...' : 'Registrando...')
+              : (mode === 'forgot' ? 'Enviar link de recuperación' : mode === 'login' ? 'Iniciar sesión' : 'Crear cuenta')
             }
           </button>
         </form>
@@ -152,7 +180,7 @@ export default function LoginPage() {
         )}
 
         <p className="text-center text-sm" style={{ color: 'var(--text-lighter)' }}>
-          {mode === 'login' ? (
+          {mode === 'login' && (
             <>
               No tenés cuenta?{' '}
               <button
@@ -164,7 +192,8 @@ export default function LoginPage() {
                 Registrate
               </button>
             </>
-          ) : (
+          )}
+          {mode === 'register' && (
             <>
               Ya tenés cuenta?{' '}
               <button
@@ -174,6 +203,18 @@ export default function LoginPage() {
                 style={{ color: 'var(--brand-600)' }}
               >
                 Iniciá sesión
+              </button>
+            </>
+          )}
+          {mode === 'forgot' && (
+            <>
+              <button
+                type="button"
+                onClick={() => { setMode('login'); setError(''); setMessage(''); }}
+                className="font-medium hover:opacity-80"
+                style={{ color: 'var(--brand-600)' }}
+              >
+                Volver al login
               </button>
             </>
           )}
