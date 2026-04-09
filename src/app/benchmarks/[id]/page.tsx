@@ -16,6 +16,7 @@ import { es } from 'date-fns/locale';
 import AppShell from '@/components/AppShell';
 import ImageGallery from '@/components/ImageGallery';
 import ImageUpload from '@/components/ImageUpload';
+import RichTextEditor from '@/components/RichTextEditor';
 
 import {
   useBenchmark,
@@ -44,68 +45,6 @@ const TAB_COLORS = [
   { bg: 'bg-teal-400', ring: 'ring-teal-400', text: 'text-teal-600', light: 'bg-teal-50', border: 'border-teal-400' },
   { bg: 'bg-pink-400', ring: 'ring-pink-400', text: 'text-pink-600', light: 'bg-pink-50', border: 'border-pink-400' },
 ];
-
-/** Parse competitor notes into structured sections */
-function parseNotes(notes: string) {
-  const lines = notes.split('\n').filter((l) => l.trim());
-
-  let subtitle = '';
-  const steps: { title: string; description: string }[] = [];
-  let featureKey = '';
-  let preAccess = '';
-  let extraParagraphs: string[] = [];
-
-  let i = 0;
-
-  // First line is usually the subtitle/tagline
-  if (lines.length > 0 && !lines[0].match(/^\d+\./)) {
-    subtitle = lines[0];
-    i = 1;
-  }
-
-  // Skip "Flujo de onboarding:" header if present
-  if (i < lines.length && lines[i].toLowerCase().includes('flujo de onboarding')) {
-    i++;
-  }
-
-  // Parse numbered steps
-  while (i < lines.length) {
-    const line = lines[i];
-    const stepMatch = line.match(/^(\d+)\.\s+(.+)/);
-    if (stepMatch) {
-      steps.push({ title: '', description: stepMatch[2] });
-      i++;
-      continue;
-    }
-    break;
-  }
-
-  // Parse remaining lines
-  while (i < lines.length) {
-    const line = lines[i];
-    if (line.toLowerCase().startsWith('feature clave:') || line.toLowerCase().startsWith('features clave:')) {
-      featureKey = line.replace(/^features? clave:\s*/i, '');
-    } else if (line.toLowerCase().startsWith('acceso pre-inicio:')) {
-      preAccess = line.replace(/^acceso pre-inicio:\s*/i, '');
-    } else if (line.trim()) {
-      extraParagraphs.push(line);
-    }
-    i++;
-  }
-
-  return { subtitle, steps, featureKey, preAccess, extraParagraphs };
-}
-
-/** Render bold markers: **text** or text between existing bold markers */
-function renderFormattedText(text: string) {
-  const parts = text.split(/(\*\*[^*]+\*\*)/g);
-  return parts.map((part, i) => {
-    if (part.startsWith('**') && part.endsWith('**')) {
-      return <strong key={i} className="font-semibold text-gray-900">{part.slice(2, -2)}</strong>;
-    }
-    return <span key={i}>{part}</span>;
-  });
-}
 
 export default function BenchmarkDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -408,14 +347,12 @@ export default function BenchmarkDetailPage() {
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-500 mb-1">Descripción / Notas</label>
-                    <textarea
-                      value={editingNotes[activeComp.id]}
-                      onChange={(e) =>
-                        setEditingNotes({ ...editingNotes, [activeComp.id]: e.target.value })
+                    <RichTextEditor
+                      content={editingNotes[activeComp.id]}
+                      onChange={(html) =>
+                        setEditingNotes({ ...editingNotes, [activeComp.id]: html })
                       }
-                      rows={12}
-                      className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 font-mono focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                      autoFocus
+                      placeholder="Escribí la descripción del competidor..."
                     />
                   </div>
                   <div className="flex gap-2">
@@ -455,67 +392,10 @@ export default function BenchmarkDetailPage() {
                   </div>
                 </div>
               ) : activeComp.notes ? (
-                (() => {
-                  const parsed = parseNotes(activeComp.notes);
-                  return (
-                    <div className="space-y-6">
-                      {/* Subtitle */}
-                      {parsed.subtitle && (
-                        <p className="text-sm text-gray-500 font-mono">{parsed.subtitle}</p>
-                      )}
-
-                      {/* Steps */}
-                      {parsed.steps.length > 0 && (
-                        <div className="space-y-4">
-                          {parsed.steps.map((step, i) => (
-                            <div key={i} className="flex gap-4">
-                              <div className="flex-shrink-0">
-                                <span className={`flex h-9 w-9 items-center justify-center rounded-full ${activeColor.light} ${activeColor.text} text-sm font-semibold`}>
-                                  {i + 1}
-                                </span>
-                              </div>
-                              <div className="flex-1 pt-1">
-                                <p className="text-sm leading-relaxed text-gray-700">{step.description}</p>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-
-                      {/* Feature Key */}
-                      {parsed.featureKey && (
-                        <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">
-                          <p className="text-sm text-gray-700">
-                            <span className="font-semibold">Feature clave: </span>
-                            {parsed.featureKey}
-                          </p>
-                        </div>
-                      )}
-
-                      {/* Pre-access Callout */}
-                      {parsed.preAccess && (
-                        <div className={`rounded-lg px-4 py-3 ${
-                          parsed.preAccess.includes('\u2705')
-                            ? 'border border-green-200 bg-green-50'
-                            : 'border border-yellow-200 bg-yellow-50'
-                        }`}>
-                          <p className={`text-sm font-medium ${
-                            parsed.preAccess.includes('\u2705')
-                              ? 'text-green-800'
-                              : 'text-yellow-800'
-                          }`}>
-                            Acceso pre-inicio: {parsed.preAccess}
-                          </p>
-                        </div>
-                      )}
-
-                      {/* Extra paragraphs */}
-                      {parsed.extraParagraphs.map((p, i) => (
-                        <p key={i} className="text-sm leading-relaxed text-gray-600">{p}</p>
-                      ))}
-                    </div>
-                  );
-                })()
+                <div
+                  className="rich-content text-sm"
+                  dangerouslySetInnerHTML={{ __html: activeComp.notes }}
+                />
               ) : (
                 <button
                   type="button"
