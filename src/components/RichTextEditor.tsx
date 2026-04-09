@@ -54,9 +54,14 @@ function ToolbarButton({
       title={title}
       className={`rounded p-1.5 transition-colors ${
         active
-          ? 'bg-blue-100 text-blue-700'
-          : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
+          ? ''
+          : 'hover:bg-[#f5f6f8]'
       } disabled:opacity-30 disabled:cursor-not-allowed`}
+      style={
+        active
+          ? { backgroundColor: 'var(--brand-50)', color: 'var(--brand-800)' }
+          : { color: 'var(--text-lighter)' }
+      }
     >
       {children}
     </button>
@@ -64,7 +69,7 @@ function ToolbarButton({
 }
 
 function ToolbarDivider() {
-  return <div className="mx-1 h-6 w-px bg-gray-200" />;
+  return <div className="mx-1 h-6 w-px" style={{ backgroundColor: 'var(--border-default)' }} />;
 }
 
 export default function RichTextEditor({ content, onChange, placeholder = 'Escribí acá...' }: RichTextEditorProps) {
@@ -101,9 +106,9 @@ export default function RichTextEditor({ content, onChange, placeholder = 'Escri
   if (!editor) return null;
 
   return (
-    <div className="rounded-lg border border-gray-300 bg-white overflow-hidden focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500">
+    <div className="rounded-lg border bg-white overflow-hidden focus-within:ring-1" style={{ borderColor: 'var(--border-strong)' }}>
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center gap-0.5 border-b border-gray-200 bg-gray-50 px-2 py-1.5">
+      <div className="flex flex-wrap items-center gap-0.5 border-b px-2 py-1.5" style={{ borderColor: 'var(--border-default)', backgroundColor: 'var(--bg-layout)' }}>
         {/* Undo/Redo */}
         <ToolbarButton
           onClick={() => editor.chain().focus().undo().run()}

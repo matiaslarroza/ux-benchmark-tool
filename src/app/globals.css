@@ -1,123 +1,235 @@
 @import "tailwindcss";
 
+/* ========================================
+   DESIGN SYSTEM FOUNDATIONS — Humand
+   Fuente: Roboto 400/600
+   Colores, espaciado, radius, elevation
+   ======================================== */
+
 :root {
-  --background: #f9fafb;
-  --foreground: #111827;
+  /* Typography */
+  --font-family: var(--font-roboto), 'Roboto', system-ui, sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --line-height: 1.4;
+  --line-height-xl: 1.3;
+  --letter-spacing: 0.2px;
+
+  /* Type scale */
+  --text-xxxs: 10px;
+  --text-xxs: 12px;
+  --text-xs: 14px;
+  --text-s: 16px;
+  --text-m: 18px;
+  --text-l: 24px;
+  --text-xl: 32px;
+  --text-xxl: 36px;
+
+  /* Colors — Semantic */
+  --text-default: #303036;
+  --text-lighter: #636271;
+  --text-placeholder: #9CA3AF;
+  --text-inverse: #ffffff;
+
+  /* Brand */
+  --brand-50: #eff2ff;
+  --brand-100: #eff2ff;
+  --brand-400: #6f93eb;
+  --brand-600: #3b5fc2;
+  --brand-800: #213478;
+
+  /* Neutral */
+  --neutral-100: #f5f6f8;
+  --neutral-200: #e8e9ed;
+  --neutral-300: #d1d2d9;
+  --neutral-400: #9ca3af;
+  --neutral-500: #636271;
+  --neutral-800: #303036;
+
+  /* Background */
+  --bg-layout: #f5f6f8;
+  --bg-surface: #ffffff;
+  --bg-surface-hover: #f5f6f8;
+  --bg-brand-light: #eff2ff;
+
+  /* Status */
+  --success-50: #ecfdf5;
+  --success-600: #059669;
+  --success-700: #047857;
+  --error-50: #fef2f2;
+  --error-600: #dc2626;
+  --error-700: #b91c1c;
+  --warning-50: #fffbeb;
+  --warning-600: #d97706;
+  --warning-700: #b45309;
+  --info-50: #eff6ff;
+  --info-600: #2563eb;
+
+  /* Border */
+  --border-default: #e8e9ed;
+  --border-strong: #d1d2d9;
+  --border-focus: var(--brand-400);
+
+  /* Border Radius — by element height */
+  --radius-s: 4px;   /* 1–39px height */
+  --radius-m: 8px;   /* 40–71px height */
+  --radius-l: 16px;  /* 72px+ height */
+  --radius-full: 999px; /* badges, chips, pills */
+
+  /* Spacing — 8px base */
+  --space-025: 2px;
+  --space-05: 4px;
+  --space-1: 8px;
+  --space-15: 12px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-8: 64px;
+
+  /* Elevation */
+  --shadow-4dp: -1px 4px 8px 0px rgba(233,233,244,1);
+  --shadow-8dp: -1px 8px 16px 0px rgba(170,170,186,0.45);
+  --shadow-inverted: 0px -2px 24px 0px rgba(103,103,121,0.50);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg-layout);
+  --color-foreground: var(--text-default);
+  --font-sans: var(--font-roboto);
 }
+
+/* ========================================
+   BASE STYLES
+   ======================================== */
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  background: var(--bg-layout);
+  color: var(--text-default);
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--text-xs);
+  line-height: var(--line-height);
+  letter-spacing: var(--letter-spacing);
 }
 
-/* Tiptap Editor Styles */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-default);
+}
+
+/* ========================================
+   TIPTAP EDITOR STYLES
+   ======================================== */
+
 .tiptap {
   outline: none;
+  font-family: var(--font-family);
+  color: var(--text-default);
 }
 
-.tiptap h1 { font-size: 1.5rem; font-weight: 700; margin: 1rem 0 0.5rem; color: #111827; }
-.tiptap h2 { font-size: 1.25rem; font-weight: 600; margin: 0.75rem 0 0.5rem; color: #111827; }
-.tiptap h3 { font-size: 1.1rem; font-weight: 600; margin: 0.5rem 0 0.25rem; color: #374151; }
-.tiptap p { margin: 0.25rem 0; line-height: 1.6; }
-.tiptap ul { list-style: disc; padding-left: 1.5rem; margin: 0.5rem 0; }
-.tiptap ol { list-style: decimal; padding-left: 1.5rem; margin: 0.5rem 0; }
-.tiptap li { margin: 0.15rem 0; }
+.tiptap h1 { font-size: var(--text-l); font-weight: 600; margin: var(--space-2) 0 var(--space-1); color: var(--text-default); line-height: var(--line-height); }
+.tiptap h2 { font-size: var(--text-m); font-weight: 600; margin: var(--space-15) 0 var(--space-1); color: var(--text-default); line-height: var(--line-height); }
+.tiptap h3 { font-size: var(--text-s); font-weight: 600; margin: var(--space-1) 0 var(--space-05); color: var(--text-lighter); line-height: var(--line-height); }
+.tiptap p { margin: var(--space-05) 0; line-height: var(--line-height); }
+.tiptap ul { list-style: disc; padding-left: var(--space-3); margin: var(--space-1) 0; }
+.tiptap ol { list-style: decimal; padding-left: var(--space-3); margin: var(--space-1) 0; }
+.tiptap li { margin: var(--space-025) 0; }
 .tiptap blockquote {
-  border-left: 3px solid #d1d5db;
-  padding-left: 1rem;
-  margin: 0.5rem 0;
-  color: #6b7280;
+  border-left: 3px solid var(--border-strong);
+  padding-left: var(--space-2);
+  margin: var(--space-1) 0;
+  color: var(--text-lighter);
   font-style: italic;
 }
 .tiptap hr {
   border: none;
-  border-top: 1px solid #e5e7eb;
-  margin: 1rem 0;
+  border-top: 1px solid var(--border-default);
+  margin: var(--space-2) 0;
 }
 .tiptap strong { font-weight: 600; }
 .tiptap em { font-style: italic; }
 .tiptap u { text-decoration: underline; }
 .tiptap s { text-decoration: line-through; }
 
-/* Tiptap Table Styles */
+/* Tiptap Tables */
 .tiptap table {
   border-collapse: collapse;
   width: 100%;
-  margin: 0.75rem 0;
+  margin: var(--space-15) 0;
   overflow: hidden;
-  border-radius: 0.375rem;
+  border-radius: var(--radius-s);
 }
 .tiptap table td,
 .tiptap table th {
-  border: 1px solid #e5e7eb;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.875rem;
+  border: 1px solid var(--border-default);
+  padding: var(--space-1) var(--space-15);
+  font-size: var(--text-xs);
   vertical-align: top;
   min-width: 80px;
 }
 .tiptap table th {
-  background-color: #f9fafb;
+  background-color: var(--bg-brand-light);
   font-weight: 600;
-  color: #374151;
+  color: var(--brand-800);
 }
 .tiptap table td {
-  color: #4b5563;
+  color: var(--text-lighter);
 }
 .tiptap table .selectedCell {
-  background-color: #dbeafe;
+  background-color: var(--bg-brand-light);
 }
 
 /* Tiptap Placeholder */
 .tiptap p.is-editor-empty:first-child::before {
-  color: #9ca3af;
+  color: var(--text-placeholder);
   content: attr(data-placeholder);
   float: left;
   height: 0;
   pointer-events: none;
 }
 
-/* Rich content display (read mode) */
-.rich-content h1 { font-size: 1.5rem; font-weight: 700; margin: 1rem 0 0.5rem; color: #111827; }
-.rich-content h2 { font-size: 1.25rem; font-weight: 600; margin: 0.75rem 0 0.5rem; color: #111827; }
-.rich-content h3 { font-size: 1.1rem; font-weight: 600; margin: 0.5rem 0 0.25rem; color: #374151; }
-.rich-content p { margin: 0.25rem 0; line-height: 1.6; color: #4b5563; }
-.rich-content ul { list-style: disc; padding-left: 1.5rem; margin: 0.5rem 0; }
-.rich-content ol { list-style: decimal; padding-left: 1.5rem; margin: 0.5rem 0; }
-.rich-content li { margin: 0.15rem 0; color: #4b5563; }
+/* ========================================
+   RICH CONTENT (read mode)
+   ======================================== */
+
+.rich-content {
+  font-family: var(--font-family);
+  color: var(--text-default);
+}
+.rich-content h1 { font-size: var(--text-l); font-weight: 600; margin: var(--space-2) 0 var(--space-1); color: var(--text-default); }
+.rich-content h2 { font-size: var(--text-m); font-weight: 600; margin: var(--space-15) 0 var(--space-1); color: var(--text-default); }
+.rich-content h3 { font-size: var(--text-s); font-weight: 600; margin: var(--space-1) 0 var(--space-05); color: var(--text-lighter); }
+.rich-content p { margin: var(--space-05) 0; line-height: var(--line-height); color: var(--text-lighter); }
+.rich-content ul { list-style: disc; padding-left: var(--space-3); margin: var(--space-1) 0; }
+.rich-content ol { list-style: decimal; padding-left: var(--space-3); margin: var(--space-1) 0; }
+.rich-content li { margin: var(--space-025) 0; color: var(--text-lighter); }
 .rich-content blockquote {
-  border-left: 3px solid #d1d5db;
-  padding-left: 1rem;
-  margin: 0.5rem 0;
-  color: #6b7280;
+  border-left: 3px solid var(--border-strong);
+  padding-left: var(--space-2);
+  margin: var(--space-1) 0;
+  color: var(--text-lighter);
   font-style: italic;
 }
 .rich-content hr {
   border: none;
-  border-top: 1px solid #e5e7eb;
-  margin: 1rem 0;
+  border-top: 1px solid var(--border-default);
+  margin: var(--space-2) 0;
 }
-.rich-content strong { font-weight: 600; color: #111827; }
+.rich-content strong { font-weight: 600; color: var(--text-default); }
 .rich-content table {
   border-collapse: collapse;
   width: 100%;
-  margin: 0.75rem 0;
+  margin: var(--space-15) 0;
 }
 .rich-content table td,
 .rich-content table th {
-  border: 1px solid #e5e7eb;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.875rem;
+  border: 1px solid var(--border-default);
+  padding: var(--space-1) var(--space-15);
+  font-size: var(--text-xs);
 }
 .rich-content table th {
-  background-color: #f9fafb;
+  background-color: var(--bg-brand-light);
   font-weight: 600;
-  color: #374151;
+  color: var(--brand-800);
 }

@@ -40,17 +40,19 @@ export default function TagInput({ tags, onChange, placeholder = 'Agregar tag...
 
   return (
     <div>
-      <div className="flex flex-wrap items-center gap-1.5 rounded-md border border-gray-300 bg-white px-2 py-1.5 focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500">
+      <div className="flex flex-wrap items-center gap-1.5 rounded-md border bg-white px-2 py-1.5 focus-within:ring-1" style={{ borderColor: 'var(--border-strong)' }} onFocus={(e) => { e.currentTarget.style.borderColor = 'var(--brand-400)'; }} onBlur={(e) => { e.currentTarget.style.borderColor = 'var(--border-strong)'; }}>
         {tags.map((tag, i) => (
           <span
             key={tag}
-            className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700"
+            className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium"
+            style={{ backgroundColor: 'var(--brand-50)', color: 'var(--brand-800)' }}
           >
             {tag}
             <button
               type="button"
               onClick={() => removeTag(i)}
-              className="text-blue-500 hover:text-blue-700"
+              className="hover:opacity-70"
+              style={{ color: 'var(--brand-600)' }}
             >
               <X className="h-3 w-3" />
             </button>
@@ -62,17 +64,19 @@ export default function TagInput({ tags, onChange, placeholder = 'Agregar tag...
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder={tags.length === 0 ? placeholder : ''}
-          className="min-w-[120px] flex-1 border-0 bg-transparent py-0.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none"
+          className="min-w-[120px] flex-1 border-0 bg-transparent py-0.5 text-sm placeholder-gray-400 focus:outline-none"
+          style={{ color: 'var(--text-default)' }}
         />
       </div>
       {input && filteredSuggestions.length > 0 && (
-        <div className="mt-1 rounded-md border border-gray-200 bg-white shadow-sm">
+        <div className="mt-1 rounded-md border bg-white" style={{ borderColor: 'var(--border-default)', boxShadow: 'var(--shadow-4dp)' }}>
           {filteredSuggestions.slice(0, 5).map((suggestion) => (
             <button
               key={suggestion}
               type="button"
               onClick={() => addTag(suggestion)}
-              className="block w-full px-3 py-1.5 text-left text-sm text-gray-700 hover:bg-gray-50"
+              className="block w-full px-3 py-1.5 text-left text-sm hover:bg-[#f5f6f8]"
+              style={{ color: 'var(--text-lighter)' }}
             >
               {suggestion}
             </button>

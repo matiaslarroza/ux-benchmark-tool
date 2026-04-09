@@ -70,20 +70,20 @@ export default function SearchPage() {
 
   return (
     <AppShell>
-      <h1 className="text-2xl font-bold text-gray-900">Búsqueda global</h1>
-      <p className="mt-1 text-sm text-gray-500">
+      <h1 className="text-2xl font-semibold text-[#303036]">Búsqueda global</h1>
+      <p className="mt-1 text-sm text-[#636271]">
         Buscá benchmarks, competidores y screenshots en todo el equipo
       </p>
 
       <div className="relative mt-6">
-        <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+        <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#9ca3af]" />
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Buscar por nombre de competidor, tag, categoría..."
           autoFocus
-          className="w-full rounded-lg border border-gray-300 bg-white py-3 pl-12 pr-4 text-base text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full rounded-lg border border-[#d1d2d9] bg-white py-3 pl-12 pr-4 text-base text-[#303036] placeholder-gray-400 focus:border-[#6f93eb] focus:outline-none focus:ring-2 focus:ring-[#6f93eb]"
         />
       </div>
 
@@ -91,13 +91,13 @@ export default function SearchPage() {
         {loading && (
           <div className="space-y-3">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="h-20 animate-pulse rounded-lg bg-gray-100" />
+              <div key={i} className="h-20 animate-pulse rounded-lg bg-[#f5f6f8]" />
             ))}
           </div>
         )}
 
         {!loading && query && results.length === 0 && (
-          <p className="py-12 text-center text-gray-500">
+          <p className="py-12 text-center text-[#636271]">
             No se encontraron resultados para &quot;{query}&quot;
           </p>
         )}
@@ -108,16 +108,19 @@ export default function SearchPage() {
               <Link
                 key={`${r.type}-${i}`}
                 href={`/benchmarks/${r.benchmark.id}`}
-                className="block rounded-lg border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md"
+                className="block rounded-lg border border-[#e8e9ed] bg-white p-4 transition-shadow"
+                style={{ boxShadow: 'var(--shadow-4dp)' }}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = 'var(--shadow-8dp)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'var(--shadow-4dp)'; }}
               >
                 <div className="flex items-start gap-3">
                   <div className="flex-1 min-w-0">
                     {r.type === 'benchmark' && (
                       <>
                         <span className="text-xs font-medium text-purple-600">Benchmark</span>
-                        <p className="mt-0.5 font-semibold text-gray-900">{r.benchmark.title}</p>
+                        <p className="mt-0.5 font-semibold text-[#303036]">{r.benchmark.title}</p>
                         {r.benchmark.description && (
-                          <p className="mt-0.5 text-sm text-gray-500 line-clamp-1">
+                          <p className="mt-0.5 text-sm text-[#636271] line-clamp-1">
                             {r.benchmark.description}
                           </p>
                         )}
@@ -126,8 +129,8 @@ export default function SearchPage() {
                     {r.type === 'competitor' && r.competitor && (
                       <>
                         <span className="text-xs font-medium text-green-600">Competidor</span>
-                        <p className="mt-0.5 font-semibold text-gray-900">{r.competitor.name}</p>
-                        <p className="mt-0.5 text-sm text-gray-500">
+                        <p className="mt-0.5 font-semibold text-[#303036]">{r.competitor.name}</p>
+                        <p className="mt-0.5 text-sm text-[#636271]">
                           En: {r.benchmark.title}
                         </p>
                       </>
@@ -135,7 +138,7 @@ export default function SearchPage() {
                   </div>
                   <div className="flex flex-wrap gap-1">
                     {r.benchmark.tags.slice(0, 2).map((t) => (
-                      <span key={t} className="rounded-full bg-blue-50 px-2 py-0.5 text-xs text-blue-700">
+                      <span key={t} className="rounded-full bg-[#eff2ff] px-2 py-0.5 text-xs text-[#213478]">
                         {t}
                       </span>
                     ))}
@@ -147,7 +150,7 @@ export default function SearchPage() {
         )}
 
         {!query && (
-          <div className="py-16 text-center text-gray-400">
+          <div className="py-16 text-center text-[#9ca3af]">
             <Search className="mx-auto h-12 w-12" />
             <p className="mt-4">Escribí algo para buscar en los benchmarks del equipo</p>
           </div>

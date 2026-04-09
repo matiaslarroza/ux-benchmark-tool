@@ -24,7 +24,7 @@ import {
 } from '@/hooks/useBenchmarks';
 
 const statusColors: Record<string, string> = {
-  draft: 'bg-gray-100 text-gray-700',
+  draft: 'bg-gray-100 text-[#636271]',
   in_progress: 'bg-yellow-100 text-yellow-700',
   completed: 'bg-green-100 text-green-700',
 };
@@ -37,7 +37,7 @@ const statusLabels: Record<string, string> = {
 
 const TAB_COLORS = [
   { bg: 'bg-orange-400', ring: 'ring-orange-400', text: 'text-orange-600', light: 'bg-orange-50', border: 'border-orange-400' },
-  { bg: 'bg-blue-400', ring: 'ring-blue-400', text: 'text-blue-600', light: 'bg-blue-50', border: 'border-blue-400' },
+  { bg: 'bg-blue-400', ring: 'ring-blue-400', text: 'text-blue-600', light: 'bg-[#eff2ff]', border: 'border-blue-400' },
   { bg: 'bg-green-400', ring: 'ring-green-400', text: 'text-green-600', light: 'bg-green-50', border: 'border-green-400' },
   { bg: 'bg-yellow-400', ring: 'ring-yellow-400', text: 'text-yellow-600', light: 'bg-yellow-50', border: 'border-yellow-400' },
   { bg: 'bg-purple-400', ring: 'ring-purple-400', text: 'text-purple-600', light: 'bg-purple-50', border: 'border-purple-400' },
@@ -117,9 +117,9 @@ export default function BenchmarkDetailPage() {
     return (
       <AppShell>
         <div className="animate-pulse space-y-4">
-          <div className="h-8 w-64 rounded bg-gray-200" />
-          <div className="h-4 w-96 rounded bg-gray-200" />
-          <div className="h-64 rounded-lg bg-gray-200" />
+          <div className="h-8 w-64 rounded bg-[#e8e9ed]" />
+          <div className="h-4 w-96 rounded bg-[#e8e9ed]" />
+          <div className="h-64 rounded-lg bg-[#e8e9ed]" />
         </div>
       </AppShell>
     );
@@ -128,7 +128,7 @@ export default function BenchmarkDetailPage() {
   if (!benchmark) {
     return (
       <AppShell>
-        <p className="text-gray-500">Benchmark no encontrado</p>
+        <p className="text-[#636271]">Benchmark no encontrado</p>
       </AppShell>
     );
   }
@@ -146,7 +146,7 @@ export default function BenchmarkDetailPage() {
       <div className="mb-6 flex items-center justify-between">
         <Link
           href="/"
-          className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700"
+          className="inline-flex items-center gap-1 text-sm text-[#636271] hover:text-[#636271]"
         >
           <ArrowLeft className="h-4 w-4" />
           Dashboard
@@ -154,7 +154,7 @@ export default function BenchmarkDetailPage() {
         <div className="flex gap-2">
           <Link
             href={`/benchmarks/${id}/edit`}
-            className="inline-flex items-center gap-1 rounded-md border border-gray-300 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
+            className="inline-flex items-center gap-1 rounded-md border border-[#d1d2d9] px-3 py-1.5 text-sm text-[#636271] hover:bg-[#f5f6f8]"
           >
             <Edit className="h-4 w-4" />
             Editar
@@ -172,7 +172,7 @@ export default function BenchmarkDetailPage() {
       {/* Header */}
       <div>
         <div className="flex items-start gap-3">
-          <h1 className="text-2xl font-bold text-gray-900">{benchmark.title}</h1>
+          <h1 className="text-2xl font-semibold text-[#303036]">{benchmark.title}</h1>
           <span
             className={`mt-1 shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${statusColors[benchmark.status]}`}
           >
@@ -180,9 +180,9 @@ export default function BenchmarkDetailPage() {
           </span>
         </div>
         {benchmark.description && (
-          <p className="mt-2 text-gray-600">{benchmark.description}</p>
+          <p className="mt-2 text-[#636271]">{benchmark.description}</p>
         )}
-        <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-gray-500">
+        <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-[#636271]">
           {benchmark.category && (
             <span className="rounded-full bg-purple-50 px-2.5 py-0.5 text-xs font-medium text-purple-700">
               {benchmark.category}
@@ -191,12 +191,12 @@ export default function BenchmarkDetailPage() {
           {benchmark.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700"
+              className="rounded-full bg-[#eff2ff] px-2.5 py-0.5 text-xs font-medium text-[#213478]"
             >
               {tag}
             </span>
           ))}
-          <span className="text-xs text-gray-400">
+          <span className="text-xs text-[#9ca3af]">
             por {benchmark.user?.name || 'Desconocido'} &middot;{' '}
             {formatDistanceToNow(new Date(benchmark.created_at), {
               addSuffix: true,
@@ -220,7 +220,7 @@ export default function BenchmarkDetailPage() {
                 className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all ${
                   isActive
                     ? `bg-gray-900 text-white shadow-sm`
-                    : 'border border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50'
+                    : 'border border-[#e8e9ed] bg-white text-[#636271] hover:border-[#d1d2d9] hover:bg-[#f5f6f8]'
                 }`}
               >
                 <span className={`inline-block h-2.5 w-2.5 rounded-full ${color.bg}`} />
@@ -230,7 +230,7 @@ export default function BenchmarkDetailPage() {
           })}
           <button
             onClick={() => setShowAddCompetitor(true)}
-            className="inline-flex items-center gap-1 rounded-full border border-dashed border-gray-300 px-3 py-2 text-sm text-gray-400 hover:border-gray-400 hover:text-gray-600"
+            className="inline-flex items-center gap-1 rounded-full border border-dashed border-[#d1d2d9] px-3 py-2 text-sm text-[#9ca3af] hover:border-[#d1d2d9] hover:text-[#636271]"
           >
             <Plus className="h-3.5 w-3.5" />
             Agregar
@@ -239,14 +239,14 @@ export default function BenchmarkDetailPage() {
 
         {/* Add Competitor Form */}
         {showAddCompetitor && (
-          <form onSubmit={handleAddCompetitor} className="mt-4 space-y-3 rounded-lg border border-gray-200 bg-white p-4">
+          <form onSubmit={handleAddCompetitor} className="mt-4 space-y-3 rounded-lg border border-[#e8e9ed] bg-white p-4">
             <div className="flex gap-2">
               <input
                 type="text"
                 value={newCompetitorName}
                 onChange={(e) => setNewCompetitorName(e.target.value)}
                 placeholder="Nombre del competidor"
-                className="flex-1 rounded-md border border-gray-300 px-3 py-1.5 text-sm"
+                className="flex-1 rounded-md border border-[#d1d2d9] px-3 py-1.5 text-sm"
                 autoFocus
               />
               <input
@@ -254,7 +254,7 @@ export default function BenchmarkDetailPage() {
                 value={newCompetitorUrl}
                 onChange={(e) => setNewCompetitorUrl(e.target.value)}
                 placeholder="https://..."
-                className="flex-1 rounded-md border border-gray-300 px-3 py-1.5 text-sm"
+                className="flex-1 rounded-md border border-[#d1d2d9] px-3 py-1.5 text-sm"
               />
             </div>
             <textarea
@@ -262,13 +262,13 @@ export default function BenchmarkDetailPage() {
               onChange={(e) => setNewCompetitorNotes(e.target.value)}
               placeholder="Descripción o notas..."
               rows={2}
-              className="w-full rounded-md border border-gray-300 px-3 py-1.5 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full rounded-md border border-[#d1d2d9] px-3 py-1.5 text-sm text-[#303036] placeholder-gray-400 focus:border-[#6f93eb] focus:outline-none focus:ring-1 focus:ring-[#6f93eb]"
             />
             <div className="flex gap-2">
-              <button type="submit" className="rounded-md bg-blue-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-blue-700">
+              <button type="submit" className="rounded-md bg-[#3b5fc2] px-4 py-1.5 text-sm font-medium text-white hover:bg-[#213478]">
                 Agregar
               </button>
-              <button type="button" onClick={() => setShowAddCompetitor(false)} className="rounded-md border border-gray-300 px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-50">
+              <button type="button" onClick={() => setShowAddCompetitor(false)} className="rounded-md border border-[#d1d2d9] px-3 py-1.5 text-sm text-[#636271] hover:bg-[#f5f6f8]">
                 Cancelar
               </button>
             </div>
@@ -277,19 +277,19 @@ export default function BenchmarkDetailPage() {
 
         {/* Active Competitor Content */}
         {activeComp && (
-          <div className="mt-6 rounded-xl border border-gray-200 bg-white">
+          <div className="mt-6 rounded-xl border border-[#e8e9ed] bg-white">
             {/* Competitor Header */}
-            <div className="border-b border-gray-100 px-6 py-5">
+            <div className="border-b border-[#e8e9ed] px-6 py-5">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
                   <span className={`inline-block h-4 w-4 rounded-full ${activeColor.bg}`} />
-                  <h2 className="text-xl font-bold text-gray-900">{activeComp.name}</h2>
+                  <h2 className="text-xl font-semibold text-[#303036]">{activeComp.name}</h2>
                   {activeComp.url && (
                     <a
                       href={activeComp.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-blue-500"
+                      className="text-[#9ca3af] hover:text-[#3b5fc2]"
                       title="Sitio web"
                     >
                       <Globe className="h-4 w-4" />
@@ -300,7 +300,7 @@ export default function BenchmarkDetailPage() {
                       href={activeComp.figma_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-purple-500"
+                      className="text-[#9ca3af] hover:text-purple-500"
                       title="Ver en Figma"
                     >
                       <svg className="h-4 w-4" viewBox="0 0 38 57" fill="currentColor"><path d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg>
@@ -313,14 +313,14 @@ export default function BenchmarkDetailPage() {
                       setEditingNotes({ ...editingNotes, [activeComp.id]: activeComp.notes || '' });
                       setEditingFigmaUrl({ ...editingFigmaUrl, [activeComp.id]: activeComp.figma_url || '' });
                     }}
-                    className="rounded-md p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+                    className="rounded-md p-1.5 text-[#9ca3af] hover:bg-[#f5f6f8] hover:text-[#636271]"
                     title="Editar notas y link de Figma"
                   >
                     <Pencil className="h-4 w-4" />
                   </button>
                   <button
                     onClick={() => handleDeleteCompetitor(activeComp.id)}
-                    className="rounded-md p-1.5 text-gray-400 hover:bg-red-50 hover:text-red-500"
+                    className="rounded-md p-1.5 text-[#9ca3af] hover:bg-red-50 hover:text-red-500"
                     title="Eliminar competidor"
                   >
                     <Trash2 className="h-4 w-4" />
@@ -334,7 +334,7 @@ export default function BenchmarkDetailPage() {
               {editingNotes[activeComp.id] !== undefined ? (
                 <div className="space-y-3">
                   <div>
-                    <label className="block text-xs font-medium text-gray-500 mb-1">Link de Figma / FigJam (opcional)</label>
+                    <label className="block text-xs font-medium text-[#636271] mb-1">Link de Figma / FigJam (opcional)</label>
                     <input
                       type="url"
                       value={editingFigmaUrl[activeComp.id] || ''}
@@ -342,11 +342,11 @@ export default function BenchmarkDetailPage() {
                         setEditingFigmaUrl({ ...editingFigmaUrl, [activeComp.id]: e.target.value })
                       }
                       placeholder="https://www.figma.com/design/... o https://www.figma.com/board/..."
-                      className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      className="w-full rounded-md border border-[#d1d2d9] px-3 py-2 text-sm text-[#303036] placeholder-gray-400 focus:border-[#6f93eb] focus:outline-none focus:ring-1 focus:ring-[#6f93eb]"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-500 mb-1">Descripción / Notas</label>
+                    <label className="block text-xs font-medium text-[#636271] mb-1">Descripción / Notas</label>
                     <RichTextEditor
                       content={editingNotes[activeComp.id]}
                       onChange={(html) =>
@@ -371,7 +371,7 @@ export default function BenchmarkDetailPage() {
                         setEditingFigmaUrl(updatedFigma);
                         refetch();
                       }}
-                      className="rounded-md bg-blue-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-blue-700"
+                      className="rounded-md bg-[#3b5fc2] px-4 py-1.5 text-sm font-medium text-white hover:bg-[#213478]"
                     >
                       Guardar
                     </button>
@@ -385,7 +385,7 @@ export default function BenchmarkDetailPage() {
                         delete updatedFigma[activeComp.id];
                         setEditingFigmaUrl(updatedFigma);
                       }}
-                      className="rounded-md border border-gray-300 px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-50"
+                      className="rounded-md border border-[#d1d2d9] px-3 py-1.5 text-sm text-[#636271] hover:bg-[#f5f6f8]"
                     >
                       Cancelar
                     </button>
@@ -403,7 +403,7 @@ export default function BenchmarkDetailPage() {
                     setEditingNotes({ ...editingNotes, [activeComp.id]: '' });
                     setEditingFigmaUrl({ ...editingFigmaUrl, [activeComp.id]: '' });
                   }}
-                  className="w-full rounded-md border border-dashed border-gray-200 px-4 py-8 text-center text-sm text-gray-400 transition-colors hover:border-gray-400 hover:bg-gray-50"
+                  className="w-full rounded-md border border-dashed border-[#e8e9ed] px-4 py-8 text-center text-sm text-[#9ca3af] transition-colors hover:border-[#d1d2d9] hover:bg-[#f5f6f8]"
                 >
                   + Agregar descripción, notas o link de Figma...
                 </button>
@@ -411,8 +411,8 @@ export default function BenchmarkDetailPage() {
             </div>
 
             {/* Screenshots Section */}
-            <div className="border-t border-gray-100 px-6 py-5">
-              <h3 className="mb-4 text-sm font-semibold text-gray-900 uppercase tracking-wide">Screenshots</h3>
+            <div className="border-t border-[#e8e9ed] px-6 py-5">
+              <h3 className="mb-4 text-sm font-semibold text-[#303036] uppercase tracking-wide">Screenshots</h3>
               <ImageGallery
                 screenshots={activeComp.screenshots || []}
                 onDelete={handleDeleteScreenshot}
@@ -429,8 +429,8 @@ export default function BenchmarkDetailPage() {
         )}
 
         {competitors.length === 0 && !showAddCompetitor && (
-          <div className="mt-6 rounded-lg border border-dashed border-gray-300 py-12 text-center">
-            <p className="text-gray-500">No hay competidores todavía. Agregá el primero.</p>
+          <div className="mt-6 rounded-lg border border-dashed border-[#d1d2d9] py-12 text-center">
+            <p className="text-[#636271]">No hay competidores todavía. Agregá el primero.</p>
           </div>
         )}
       </div>

@@ -22,7 +22,7 @@ export default function ImageGallery({ screenshots, onDelete }: ImageGalleryProp
     <>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
         {screenshots.map((s, i) => (
-          <div key={s.id} className="group relative overflow-hidden rounded-lg border border-gray-200 bg-white">
+          <div key={s.id} className="group relative overflow-hidden rounded-lg border bg-white" style={{ borderColor: 'var(--border-default)' }}>
             <button
               type="button"
               onClick={() => setLightboxIndex(i)}
@@ -46,7 +46,8 @@ export default function ImageGallery({ screenshots, onDelete }: ImageGalleryProp
                   href={s.figma_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-1 inline-flex items-center gap-1 text-xs text-blue-500 hover:text-blue-700"
+                  className="mt-1 inline-flex items-center gap-1 text-xs hover:opacity-80"
+                  style={{ color: 'var(--brand-600)' }}
                 >
                   <ExternalLink className="h-3 w-3" />
                   Ver en Figma

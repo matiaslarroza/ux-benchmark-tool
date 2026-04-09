@@ -28,15 +28,18 @@ export default function BenchmarkCard({ benchmark, screenshotCount = 0, competit
   return (
     <Link
       href={`/benchmarks/${benchmark.id}`}
-      className="group block rounded-lg border border-gray-200 bg-white p-5 transition-shadow hover:shadow-md"
+      className="group block rounded-lg border bg-white p-5 transition-shadow"
+      style={{ borderColor: 'var(--border-default)', boxShadow: 'var(--shadow-4dp)' }}
+      onMouseEnter={(e) => { e.currentTarget.style.boxShadow = 'var(--shadow-8dp)'; }}
+      onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'var(--shadow-4dp)'; }}
     >
       <div className="flex items-start justify-between">
         <div className="min-w-0 flex-1">
-          <h3 className="truncate text-base font-semibold text-gray-900 group-hover:text-blue-600">
+          <h3 className="truncate text-base font-semibold group-hover:text-[#3b5fc2]" style={{ color: 'var(--text-default)' }}>
             {benchmark.title}
           </h3>
           {benchmark.description && (
-            <p className="mt-1 line-clamp-2 text-sm text-gray-500">{benchmark.description}</p>
+            <p className="mt-1 line-clamp-2 text-sm" style={{ color: 'var(--text-lighter)' }}>{benchmark.description}</p>
           )}
         </div>
         <span className={`ml-3 shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${statusColors[benchmark.status]}`}>
@@ -51,7 +54,7 @@ export default function BenchmarkCard({ benchmark, screenshotCount = 0, competit
           </span>
         )}
         {benchmark.tags.slice(0, 3).map((tag) => (
-          <span key={tag} className="rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700">
+          <span key={tag} className="rounded-full px-2.5 py-0.5 text-xs font-medium" style={{ backgroundColor: 'var(--brand-50)', color: 'var(--brand-800)' }}>
             {tag}
           </span>
         ))}
@@ -60,7 +63,7 @@ export default function BenchmarkCard({ benchmark, screenshotCount = 0, competit
         )}
       </div>
 
-      <div className="mt-4 flex items-center gap-4 text-xs text-gray-500">
+      <div className="mt-4 flex items-center gap-4 text-xs" style={{ color: 'var(--text-lighter)' }}>
         <span className="flex items-center gap-1">
           <User className="h-3.5 w-3.5" />
           {benchmark.user?.name || 'Sin asignar'}

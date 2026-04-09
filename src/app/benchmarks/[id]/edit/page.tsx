@@ -52,8 +52,8 @@ export default function EditBenchmarkPage() {
     return (
       <AppShell>
         <div className="animate-pulse space-y-4">
-          <div className="h-8 w-48 rounded bg-gray-200" />
-          <div className="h-64 rounded-lg bg-gray-200" />
+          <div className="h-8 w-48 rounded bg-[#e8e9ed]" />
+          <div className="h-64 rounded-lg bg-[#e8e9ed]" />
         </div>
       </AppShell>
     );
@@ -64,44 +64,44 @@ export default function EditBenchmarkPage() {
       <div className="mb-6">
         <Link
           href={`/benchmarks/${id}`}
-          className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700"
+          className="inline-flex items-center gap-1 text-sm text-[#636271] hover:text-[#636271]"
         >
           <ArrowLeft className="h-4 w-4" />
           Volver
         </Link>
       </div>
 
-      <h1 className="text-2xl font-bold text-gray-900">Editar Benchmark</h1>
+      <h1 className="text-2xl font-semibold text-[#303036]">Editar Benchmark</h1>
 
       <form onSubmit={handleSubmit} className="mt-6 max-w-2xl space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Título *</label>
+          <label className="block text-sm font-medium text-[#636271]">Título *</label>
           <input
             type="text"
             required
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="mt-1 block w-full rounded-md border border-[#d1d2d9] px-3 py-2 text-sm text-[#303036] focus:border-[#6f93eb] focus:outline-none focus:ring-1 focus:ring-[#6f93eb]"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Descripción</label>
+          <label className="block text-sm font-medium text-[#636271]">Descripción</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             rows={3}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="mt-1 block w-full rounded-md border border-[#d1d2d9] px-3 py-2 text-sm text-[#303036] focus:border-[#6f93eb] focus:outline-none focus:ring-1 focus:ring-[#6f93eb]"
           />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Categoría</label>
+            <label className="block text-sm font-medium text-[#636271]">Categoría</label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="mt-1 block w-full rounded-md border border-[#d1d2d9] bg-white px-3 py-2 text-sm text-[#636271] focus:border-[#6f93eb] focus:outline-none focus:ring-1 focus:ring-[#6f93eb]"
             >
               <option value="">Seleccionar...</option>
               {categories.map((c) => (
@@ -110,11 +110,11 @@ export default function EditBenchmarkPage() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Estado</label>
+            <label className="block text-sm font-medium text-[#636271]">Estado</label>
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value as BenchmarkStatus)}
-              className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="mt-1 block w-full rounded-md border border-[#d1d2d9] bg-white px-3 py-2 text-sm text-[#636271] focus:border-[#6f93eb] focus:outline-none focus:ring-1 focus:ring-[#6f93eb]"
             >
               <option value="draft">Borrador</option>
               <option value="in_progress">En progreso</option>
@@ -124,7 +124,7 @@ export default function EditBenchmarkPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Tags</label>
+          <label className="block text-sm font-medium text-[#636271] mb-1">Tags</label>
           <TagInput tags={tags} onChange={setTags} />
         </div>
 
@@ -132,13 +132,13 @@ export default function EditBenchmarkPage() {
           <button
             type="submit"
             disabled={saving}
-            className="rounded-md bg-blue-600 px-6 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+            className="rounded-md bg-[#3b5fc2] px-6 py-2 text-sm font-medium text-white hover:bg-[#213478] disabled:opacity-50"
           >
             {saving ? 'Guardando...' : 'Guardar cambios'}
           </button>
           <Link
             href={`/benchmarks/${id}`}
-            className="rounded-md border border-gray-300 px-6 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            className="rounded-md border border-[#d1d2d9] px-6 py-2 text-sm font-medium text-[#636271] hover:bg-[#f5f6f8]"
           >
             Cancelar
           </Link>

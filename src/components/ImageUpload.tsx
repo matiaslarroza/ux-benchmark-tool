@@ -64,18 +64,23 @@ export default function ImageUpload({ onUpload, competitorId }: ImageUploadProps
       onDrop={handleDrop}
       className={`relative flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-6 transition-colors ${
         dragging
-          ? 'border-blue-400 bg-blue-50'
-          : 'border-gray-300 hover:border-gray-400'
+          ? ''
+          : 'hover:border-[#d1d2d9]'
       }`}
+      style={
+        dragging
+          ? { borderColor: 'var(--brand-400)', backgroundColor: 'var(--brand-50)' }
+          : { borderColor: 'var(--border-strong)' }
+      }
     >
       {uploading ? (
-        <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+        <Loader2 className="h-8 w-8 animate-spin" style={{ color: 'var(--brand-400)' }} />
       ) : (
         <>
-          <Upload className="h-8 w-8 text-gray-400" />
-          <p className="mt-2 text-sm text-gray-600">
+          <Upload className="h-8 w-8" style={{ color: 'var(--neutral-400)' }} />
+          <p className="mt-2 text-sm" style={{ color: 'var(--text-lighter)' }}>
             Arrastrá imágenes acá o{' '}
-            <label className="cursor-pointer font-medium text-blue-600 hover:text-blue-500">
+            <label className="cursor-pointer font-medium hover:opacity-80" style={{ color: 'var(--brand-600)' }}>
               elegí archivos
               <input
                 type="file"

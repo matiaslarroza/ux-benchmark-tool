@@ -49,14 +49,15 @@ export default function DashboardPage() {
     <AppShell>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Benchmarks</h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <h1 className="text-2xl font-semibold" style={{ color: 'var(--text-default)' }}>Benchmarks</h1>
+          <p className="mt-1 text-sm" style={{ color: 'var(--text-lighter)' }}>
             {benchmarks.length} benchmark{benchmarks.length !== 1 ? 's' : ''} del equipo
           </p>
         </div>
         <Link
           href="/benchmarks/new"
-          className="flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+          className="flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-white hover:opacity-90"
+          style={{ backgroundColor: 'var(--brand-600)' }}
         >
           <Plus className="h-4 w-4" />
           Nuevo Benchmark
@@ -75,7 +76,8 @@ export default function DashboardPage() {
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="rounded-md border bg-white px-3 py-2 text-sm focus:outline-none focus:ring-1"
+            style={{ borderColor: 'var(--border-strong)', color: 'var(--text-lighter)' }}
           >
             <option value="">Todas las categorías</option>
             {categories.map((c) => (
@@ -87,7 +89,8 @@ export default function DashboardPage() {
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value)}
-            className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="rounded-md border bg-white px-3 py-2 text-sm focus:outline-none focus:ring-1"
+            style={{ borderColor: 'var(--border-strong)', color: 'var(--text-lighter)' }}
           >
             {statuses.map((s) => (
               <option key={s} value={s}>
@@ -102,12 +105,12 @@ export default function DashboardPage() {
         {loading ? (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="h-48 animate-pulse rounded-lg border border-gray-200 bg-gray-100" />
+              <div key={i} className="h-48 animate-pulse rounded-lg border" style={{ borderColor: 'var(--border-default)', backgroundColor: 'var(--bg-layout)' }} />
             ))}
           </div>
         ) : filtered.length === 0 ? (
-          <div className="rounded-lg border border-dashed border-gray-300 py-16 text-center">
-            <p className="text-gray-500">
+          <div className="rounded-lg border border-dashed py-16 text-center" style={{ borderColor: 'var(--border-strong)' }}>
+            <p style={{ color: 'var(--text-lighter)' }}>
               {benchmarks.length === 0
                 ? 'No hay benchmarks todavía. Creá el primero!'
                 : 'No se encontraron benchmarks con esos filtros'}
@@ -115,7 +118,8 @@ export default function DashboardPage() {
             {benchmarks.length === 0 && (
               <Link
                 href="/benchmarks/new"
-                className="mt-4 inline-flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                className="mt-4 inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-white hover:opacity-90"
+                style={{ backgroundColor: 'var(--brand-600)' }}
               >
                 <Plus className="h-4 w-4" />
                 Crear Benchmark
