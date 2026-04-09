@@ -9,7 +9,14 @@ import TagInput from '@/components/TagInput';
 import { useBenchmarkActions } from '@/hooks/useBenchmarks';
 import type { BenchmarkStatus } from '@/lib/types';
 
-const categories = ['checkout', 'onboarding', 'navegación', 'búsqueda', 'dashboard', 'landing', 'otro'];
+const categories = [
+  'Muro', 'Grupos', 'Noticias', 'Chats', 'Librerías de conocimiento',
+  'Eventos', 'Portal de servicios', 'Reconocimientos', 'Formularios y Trámites',
+  'Control horario', 'Vacaciones y permisos', 'Desempeño', 'Objetivos',
+  'Personas', 'Organigrama', 'Archivos', 'Aprendizaje', 'Onboarding',
+  'Tareas', 'People Experience', 'Encuestas', 'Mis documentos',
+  'Marketplace', 'Accesos rápidos',
+];
 
 export default function NewBenchmarkPage() {
   const router = useRouter();

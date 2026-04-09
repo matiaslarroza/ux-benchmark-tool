@@ -10,7 +10,14 @@ import BenchmarkCard from '@/components/BenchmarkCard';
 import SearchBar from '@/components/SearchBar';
 import { useBenchmarks } from '@/hooks/useBenchmarks';
 
-const categories = ['checkout', 'onboarding', 'navegación', 'búsqueda', 'dashboard', 'landing'];
+const categories = [
+  'Muro', 'Grupos', 'Noticias', 'Chats', 'Librerías de conocimiento',
+  'Eventos', 'Portal de servicios', 'Reconocimientos', 'Formularios y Trámites',
+  'Control horario', 'Vacaciones y permisos', 'Desempeño', 'Objetivos',
+  'Personas', 'Organigrama', 'Archivos', 'Aprendizaje', 'Onboarding',
+  'Tareas', 'People Experience', 'Encuestas', 'Mis documentos',
+  'Marketplace', 'Accesos rápidos',
+];
 const statuses = ['', 'draft', 'in_progress', 'completed'];
 const statusLabels: Record<string, string> = {
   '': 'Todos',
