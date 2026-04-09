@@ -13,7 +13,7 @@ export function useBenchmarks() {
     setLoading(true);
     const { data } = await supabase
       .from('benchmarks')
-      .select('*, user:users(*)')
+      .select('*, user:users(*), competitors(*, screenshots(id))')
       .order('updated_at', { ascending: false });
     setBenchmarks(data || []);
     setLoading(false);

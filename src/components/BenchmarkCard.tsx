@@ -67,11 +67,13 @@ export default function BenchmarkCard({ benchmark, screenshotCount = 0, competit
         </span>
         <span className="flex items-center gap-1">
           <Calendar className="h-3.5 w-3.5" />
-          {formatDistanceToNow(new Date(benchmark.created_at), { addSuffix: true, locale: es })}
+          {formatDistanceToNow(new Date(benchmark.created_at), { addSuffix: true, locale: es })
+            .replace('alrededor de ', '')
+            .replace('menos de ', '<')}
         </span>
         <span className="flex items-center gap-1">
           <ImageIcon className="h-3.5 w-3.5" />
-          {screenshotCount} imgs / {competitorCount} comp.
+          {screenshotCount} Imgs
         </span>
       </div>
     </Link>
