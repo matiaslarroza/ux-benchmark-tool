@@ -105,7 +105,7 @@ export default function EditBenchmarkPage() {
             >
               <option value="">Seleccionar...</option>
               {categories.map((c) => (
-                <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>
+                <option key={c} value={c}>{c}</option>
               ))}
             </select>
           </div>
