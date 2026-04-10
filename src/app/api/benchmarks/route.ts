@@ -21,7 +21,7 @@ export async function POST(request: Request) {
 
     const supabase = getSupabase();
     const body = await request.json();
-    const { title, description, category, tags, status, competitors } = body;
+    const { title, description, category, tags, status, competitors, email } = body;
 
     if (!title || !competitors || !Array.isArray(competitors)) {
       return NextResponse.json(
@@ -30,9 +30,30 @@ export async function POST(request: Request) {
       );
     }
 
-    // Get first user as default author
-    const { data: users } = await supabase.from('users').select('id').limit(1);
-    const userId = users?.[0]?.id || null;
+    if (!email) {
+      return NextResponse.json(
+        { error: 'Se requiere email. Proporcioná tu email de UX Benchmark Tool.' },
+        { status: 400 }
+      );
+    }
+
+    // Find user by email
+    const { data: users } = await supabase
+      .from('users')
+      .select('id, email')
+      .eq('email', email.toLowerCase())
+      .limit(1);
+
+    if (!users || users.length === 0) {
+      return NextResponse.json(
+        {
+          error: `No se encontró una cuenta con el email "${email}" en UX Benchmark Tool. Registrate primero en https://ux-benchmark-tool.vercel.app/login y después volvé a intentar.`,
+        },
+        { status: 403 }
+      );
+    }
+
+    const userId = users[0].id;
 
     // Create benchmark
     const { data: benchmark, error: bErr } = await supabase
