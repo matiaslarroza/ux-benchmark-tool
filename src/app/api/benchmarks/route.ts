@@ -38,11 +38,17 @@ export async function POST(request: Request) {
     }
 
     // Find user by email
-    const { data: users } = await supabase
+    const { data: users, error: userError } = await supabase
       .from('users')
-      .select('id, email')
-      .eq('email', email.toLowerCase())
-      .limit(1);
+      .select('id, email, name')
+      .ilike('email', email.trim());
+
+    if (userError) {
+      return NextResponse.json(
+        { error: `Error buscando usuario: ${userError.message}` },
+        { status: 500 }
+      );
+    }
 
     if (!users || users.length === 0) {
       return NextResponse.json(
@@ -100,6 +106,10 @@ export async function POST(request: Request) {
         id: benchmark.id,
         title: benchmark.title,
         url: `${appUrl}/benchmarks/${benchmark.id}`,
+      },
+      published_by: {
+        name: users[0].name,
+        email: users[0].email,
       },
     });
   } catch (err) {
