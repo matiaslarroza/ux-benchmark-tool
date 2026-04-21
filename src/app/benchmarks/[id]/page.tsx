@@ -22,6 +22,7 @@ import {
   useBenchmark,
   useBenchmarkActions,
 } from '@/hooks/useBenchmarks';
+import { useAuth } from '@/hooks/useAuth';
 
 const statusColors: Record<string, string> = {
   draft: 'bg-gray-100 text-[#636271]',
@@ -49,6 +50,7 @@ const TAB_COLORS = [
 export default function BenchmarkDetailPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
   const { benchmark, competitors, loading, refetch } = useBenchmark(id);
   const {
     deleteBenchmark,
@@ -133,6 +135,8 @@ export default function BenchmarkDetailPage() {
     );
   }
 
+  const isOwner = !authLoading && !!user && !!benchmark && user.id === benchmark.created_by;
+
   const totalScreenshots = competitors.reduce(
     (acc, c) => acc + (c.screenshots?.length || 0),
     0
@@ -152,20 +156,24 @@ export default function BenchmarkDetailPage() {
           Dashboard
         </Link>
         <div className="flex gap-2">
-          <Link
-            href={`/benchmarks/${id}/edit`}
-            className="inline-flex items-center gap-1 rounded-md border border-[#d1d2d9] px-3 py-1.5 text-sm text-[#636271] hover:bg-[#f5f6f8]"
-          >
-            <Edit className="h-4 w-4" />
-            Editar
-          </Link>
-          <button
-            onClick={handleDeleteBenchmark}
-            className="inline-flex items-center gap-1 rounded-md border border-red-200 px-3 py-1.5 text-sm text-red-600 hover:bg-red-50"
-          >
-            <Trash2 className="h-4 w-4" />
-            Eliminar
-          </button>
+          {isOwner && (
+            <Link
+              href={`/benchmarks/${id}/edit`}
+              className="inline-flex items-center gap-1 rounded-md border border-[#d1d2d9] px-3 py-1.5 text-sm text-[#636271] hover:bg-[#f5f6f8]"
+            >
+              <Edit className="h-4 w-4" />
+              Editar
+            </Link>
+          )}
+          {isOwner && (
+            <button
+              onClick={handleDeleteBenchmark}
+              className="inline-flex items-center gap-1 rounded-md border border-red-200 px-3 py-1.5 text-sm text-red-600 hover:bg-red-50"
+            >
+              <Trash2 className="h-4 w-4" />
+              Eliminar
+            </button>
+          )}
         </div>
       </div>
 
